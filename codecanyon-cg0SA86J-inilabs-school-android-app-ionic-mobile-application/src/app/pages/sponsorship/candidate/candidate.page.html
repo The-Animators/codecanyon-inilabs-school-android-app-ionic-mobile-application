@@ -1,0 +1,47 @@
+<ion-header>
+  <ion-toolbar class="background-color">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title align="center">{{language?.panel_title}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content  class="bg-image no-scroll">
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event ,true)" *ngIf="isRefresh">
+    <ion-refresher-content
+            pullingIcon="arrow-dropdown"
+            pullingText="Pull to refresh"
+            refreshingSpinner="circles"
+            refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
+  <ng-container *ngIf="candidates">
+    <ion-card  class="card-student-css" *ngFor="let candidate of candidates" routerLink="/candidateview/{{candidate.candidateID}}" >
+      <div style="margin: 8px;">
+        <ion-row>
+          <ion-col size="4">
+            <img class="student-img" src="{{siteUrl}}uploads/images/{{candidate.photo}}">
+          </ion-col>
+          <ion-col size="8">
+            <div class="text-div">
+              <h3 class="text-h">{{candidate.srname}}</h3>
+              <p class="text-p">{{language?.candidate_registerNO}}: {{candidate.srregisterNO}}</p>
+              <p class="text-p">{{language?.candidate_classes}}: {{candidate.srclasses}}</p>
+            </div>
+          </ion-col>
+        </ion-row>
+        <ion-item class="ion-item-css" >
+          <ion-avatar class="avatar-img">
+            <img src="assets/boy.png" />
+          </ion-avatar>
+          <ion-label>
+            <h4 class="ion-text-h">{{language?.candidate_sponsor}}</h4>
+            <ion-text color="secondary">
+              <p class="ion-text-p">{{sponsors[candidate.sponsorID]}}</p>
+            </ion-text>
+          </ion-label>
+        </ion-item>
+      </div>
+    </ion-card>
+  </ng-container>
+</ion-content>

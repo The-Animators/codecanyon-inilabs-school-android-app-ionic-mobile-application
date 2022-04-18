@@ -1,0 +1,79 @@
+<ion-header>
+  <ion-toolbar class="background-color">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title align="center">{{language?.panel_title}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content  class="bg-image no-scroll">
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event ,true)" *ngIf="isRefresh">
+    <ion-refresher-content
+            pullingIcon="arrow-dropdown"
+            pullingText="Pull to refresh"
+            refreshingSpinner="circles"
+            refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
+  <ng-container *ngIf="overtimes">
+    <ion-card  class="card-student-css" *ngFor="let overtime of overtimes" >
+      <div style="margin: 8px;">
+        <ion-item class="ion-item-css" >
+          <ion-avatar class="avatar-img">
+            <img src="assets/boy.png" />
+          </ion-avatar>
+          <ion-label>
+            <h4 class="ion-text-h">{{language?.overtime_role}}</h4>
+            <ion-text color="secondary">
+              <p class="ion-text-p">{{roles[overtime?.usertypeID]}}</p>
+            </ion-text>
+          </ion-label>
+        </ion-item>
+        <ion-item class="ion-item-css" >
+          <ion-avatar class="avatar-img">
+            <img src="assets/teacher.png" />
+          </ion-avatar>
+          <ion-label>
+            <h4 class="ion-text-h">{{language?.overtime_user}}</h4>
+            <ion-text color="secondary">
+              <p class="ion-text-p">{{allUsers[overtime?.usertypeID][overtime?.userID]?.name}}</p>
+            </ion-text>
+          </ion-label>
+        </ion-item>
+        <ion-item class="ion-item-css" >
+          <ion-avatar class="avatar-img">
+            <img src="assets/routine.png" />
+          </ion-avatar>
+          <ion-label>
+            <h4 class="ion-text-h">{{language?.overtime_date}}</h4>
+            <ion-text color="secondary">
+              <p class="ion-text-p">{{overtime?.date | date: "dd MMM yyyy"}}</p>
+            </ion-text>
+          </ion-label>
+        </ion-item>
+        <ion-item class="ion-item-css" >
+          <ion-avatar class="avatar-img">
+            <img src="assets/routine.png" />
+          </ion-avatar>
+          <ion-label>
+            <h4 class="ion-text-h">{{language?.overtime_hours}}</h4>
+            <ion-text color="secondary">
+              <p class="ion-text-p">{{overtime?.hours}}</p>
+            </ion-text>
+          </ion-label>
+        </ion-item>
+        <ion-item class="ion-item-css" >
+          <ion-avatar class="avatar-img">
+            <img src="assets/plant.png" />
+          </ion-avatar>
+          <ion-label>
+            <h4 class="ion-text-h">{{language?.overtime_total_amount}}</h4>
+            <ion-text color="secondary">
+              <p class="ion-text-p">{{overtime?.amount}}</p>
+            </ion-text>
+          </ion-label>
+        </ion-item>
+      </div>
+    </ion-card>
+  </ng-container>
+</ion-content>

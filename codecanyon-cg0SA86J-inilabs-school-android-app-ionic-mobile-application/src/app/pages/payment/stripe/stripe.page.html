@@ -1,0 +1,85 @@
+<ion-header>
+  <ion-toolbar class="background-color">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+      Stripe
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card class="welcome-card">
+    <ion-img src="/assets/stripe.png"></ion-img>
+    <div>
+      <ion-row>
+        <ion-col>
+          <h4>Total Payment</h4>
+        </ion-col>
+        <ion-col>
+          <h3>{{currencyIcon}}{{paymentAmount}}</h3>
+        </ion-col>
+      </ion-row>
+    </div>
+    <ion-card-content>
+      <form novalidate [formGroup]="stripeForm" (ngSubmit)="payWithStripe()" >
+      <ion-list>
+        <ion-item>
+          <ion-label color="primary">Card Number: </ion-label>
+          <ion-input type="text" placeholder="4242424242424242"
+                     [(ngModel)]="cardNumber" formControlName="cardNumber"></ion-input>
+        </ion-item>
+        <div class="validation-errors">
+          <ng-container *ngFor="let validation of validation_messages.cardNumber">
+            <div class="error-message" *ngIf="stripeForm.get('cardNumber').hasError(validation.type)  && (stripeForm.get('cardNumber').dirty || stripeForm.get('cardNumber').touched)">
+              {{ validation.message }}
+            </div>
+          </ng-container>
+        </div>
+
+        <ion-item>
+          <ion-label color="primary" >Expiration Month: </ion-label>
+          <ion-input type="text" placeholder="12"
+                     [(ngModel)]="cardMonth" formControlName="cardMonth"></ion-input>
+        </ion-item>
+        <div class="validation-errors">
+          <ng-container *ngFor="let validationc of validation_messages.cardMonth">
+            <div class="error-message" *ngIf="stripeForm.get('cardMonth').hasError(validationc.type) && (stripeForm.get('cardMonth').dirty || stripeForm.get('cardMonth').touched)">
+              {{ validationc.message }}
+            </div>
+          </ng-container>
+        </div>
+
+        <ion-item>
+          <ion-label color="primary" >Expiration Year: </ion-label>
+          <ion-input type="text" placeholder="2024"
+                     [(ngModel)]="cardYear" formControlName="cardYear"></ion-input>
+        </ion-item>
+        <div class="validation-errors">
+          <ng-container *ngFor="let validation of validation_messages.cardYear">
+            <div class="error-message" *ngIf="stripeForm.get('cardYear').hasError(validation.type)  && (stripeForm.get('cardYear').dirty || stripeForm.get('cardYear').touched)">
+              {{ validation.message }}
+            </div>
+          </ng-container>
+        </div>
+
+        <ion-item>
+          <ion-label color="primary" >CVV: </ion-label>
+          <ion-input type="text" placeholder="123"
+                     [(ngModel)]="cardCVV" formControlName="cardCVV"></ion-input>
+        </ion-item>
+        <div class="validation-errors">
+          <ng-container *ngFor="let validation of validation_messages.cardCVV">
+            <div class="error-message" *ngIf="stripeForm.get('cardCVV').hasError(validation.type)  && (stripeForm.get('cardCVV').dirty || stripeForm.get('cardCVV').touched)">
+              {{ validation.message }}
+            </div>
+          </ng-container>
+        </div>
+
+      </ion-list>
+      <ion-button expand="full" color="success" type="submit" [disabled]="stripeForm.invalid" >Pay with Stripe</ion-button>
+      </form>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

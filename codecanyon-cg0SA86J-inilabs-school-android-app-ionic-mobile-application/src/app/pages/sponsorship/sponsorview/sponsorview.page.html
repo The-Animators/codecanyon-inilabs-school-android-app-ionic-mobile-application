@@ -1,0 +1,115 @@
+<ion-header>
+  <ion-toolbar class="background-color">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title align="center">{{language?.panel_title}} {{language?.view}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content  class="bg-image no-scroll">
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event,true,sponsorID)" *ngIf="isRefresh">
+    <ion-refresher-content
+            pullingIcon="arrow-dropdown"
+            pullingText="Pull to refresh"
+            refreshingSpinner="circles"
+            refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
+  <div class="imgcard" align="center" *ngIf="sponsor">
+    <img  color="secondary" *ngIf="sponsor" src="{{siteUrl}}uploads/images/{{sponsor?.photo}}" class="img2" align="center">
+  </div>
+  <ng-container  *ngIf="sponsor">
+    <ion-card class="card-bg">
+      <div class="card-class">
+        <ion-card-header class="card-header1">
+          <span style="font-weight: bold">{{language?.sponsor_sponsor}}</span>
+        </ion-card-header>
+        <ion-list  class="card-bg">
+          <ion-item class="item" *ngIf="sponsor?.name">
+            <ion-label>
+              <p align="left">{{language?.sponsor_name}}</p>
+            </ion-label>
+            <ion-note slot="end" class="ionnote">{{sponsor?.name}}</ion-note>
+          </ion-item>
+          <ion-item class="item">
+            <ion-label>
+              <p align="left">Type</p>
+            </ion-label>
+            <ion-note slot="end" class="ionnote" *ngIf="sponsor?.type == 'individual';else type">Individual</ion-note>
+            <ng-template #type>
+              <ion-note slot="end" class="ionnote">Organisation</ion-note>
+            </ng-template>
+          </ion-item>
+          <ion-item class="item">
+            <ion-label>
+              <p align="left">{{language?.sponsor_phone}}</p>
+            </ion-label>
+            <ion-note slot="end" class="ionnote">{{sponsor?.phone}}</ion-note>
+          </ion-item>
+          <ng-container *ngIf="sponsor?.type == 'individual';else org">
+            <ion-item class="item" >
+              <ion-label>
+                <p align="left">{{language?.sponsor_title}}</p>
+              </ion-label>
+              <ion-note slot="end" class="ionnote">{{titles[sponsor?.title]}}</ion-note>
+            </ion-item>
+            <ion-item class="item">
+              <ion-label>
+                <p align="left">{{language?.sponsor_person_name}}</p>
+              </ion-label>
+              <ion-note slot="end" class="ionnote">{{sponsor?.name}}</ion-note>
+            </ion-item>
+            <ion-item class="item">
+              <ion-label>
+                <p align="left">{{language?.sponsor_organisation_name}}</p>
+              </ion-label>
+              <ion-note slot="end" class="ionnote">{{sponsor?.organisation_name}}</ion-note>
+            </ion-item>
+          </ng-container>
+
+          <ng-template #org>
+            <ion-item class="item">
+              <ion-label>
+                <p align="left">{{language?.sponsor_sponsor_organisation_name}}</p>
+              </ion-label>
+              <ion-note slot="end" class="ionnote">{{sponsor?.name}}</ion-note>
+            </ion-item>
+            <ion-item class="item">
+              <ion-label>
+                <p align="left">{{language?.sponsor_title}}</p>
+              </ion-label>
+              <ion-note slot="end" class="ionnote">{{titles[sponsor?.title]}}</ion-note>
+            </ion-item>
+            <ion-item class="item">
+              <ion-label>
+                <p align="left">{{language?.sponsor_contact_person_name}}</p>
+              </ion-label>
+              <ion-note slot="end" class="ionnote">{{sponsor?.organisation_name}}</ion-note>
+            </ion-item>
+          </ng-template>
+
+          <ion-item class="item">
+            <ion-label>
+              <p align="left">{{language?.sponsor_email}}</p>
+            </ion-label>
+            <ion-note slot="end" class="ionnote">{{sponsor?.email}}</ion-note>
+          </ion-item>
+
+          <ion-item class="item">
+            <ion-label>
+              <p align="left">{{language?.sponsor_country}}</p>
+            </ion-label>
+            <ion-note slot="end" class="ionnote">{{allcountry[sponsor?.country]}}</ion-note>
+          </ion-item>
+
+          <ion-item class="item">
+            <ion-label>
+              <p align="left">{{language?.sponsor_create_date}}</p>
+            </ion-label>
+            <ion-note slot="end" class="ionnote">{{sponsor?.create_date | date: "dd MMM yyyy"}}</ion-note>
+          </ion-item>
+        </ion-list>
+      </div>
+    </ion-card>
+  </ng-container>
+</ion-content>

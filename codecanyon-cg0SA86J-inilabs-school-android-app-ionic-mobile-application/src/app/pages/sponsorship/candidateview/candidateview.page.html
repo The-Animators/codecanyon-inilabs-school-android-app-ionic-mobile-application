@@ -1,0 +1,87 @@
+<ion-header>
+  <ion-toolbar class="background-color">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title align="center">{{language?.panel_title}} {{language?.view}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content  class="bg-image no-scroll">
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event,true,candidateID)" *ngIf="isRefresh">
+    <ion-refresher-content
+            pullingIcon="arrow-dropdown"
+            pullingText="Pull to refresh"
+            refreshingSpinner="circles"
+            refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
+  <div class="imgcard" align="center" *ngIf="profile">
+    <img  color="secondary" *ngIf="profile" src="{{siteUrl}}uploads/images/{{photo[profile?.srstudentID]}}" class="img2" align="center">
+  </div>
+  <ng-container  *ngIf="profile">
+    <ion-card class="card-bg">
+      <div class="card-class">
+        <ion-card-header class="card-header1">
+          <span style="font-weight: bold">{{language?.candidate_profile}}</span>
+        </ion-card-header>
+        <ion-list  class="card-bg">
+          <ion-item class="item" *ngIf="profile?.srname">
+            <ion-label>
+              <p align="left">{{language?.candidate_name}}</p>
+            </ion-label>
+            <ion-note slot="end" class="ionnote">{{profile?.srname}}</ion-note>
+          </ion-item>
+          <ion-item class="item" *ngIf="profile?.srregisterNO">
+            <ion-label>
+              <p align="left">{{language?.candidate_registerNO}}</p>
+            </ion-label>
+            <ion-note slot="end" class="ionnote">{{profile?.srregisterNO}}</ion-note>
+          </ion-item>
+          <ion-item class="item" *ngIf="profile?.srroll">
+            <ion-label>
+              <p align="left">{{language?.candidate_roll}}</p>
+            </ion-label>
+            <ion-note slot="end" class="ionnote">{{profile?.srroll}}</ion-note>
+          </ion-item>
+          <ion-item class="item" *ngIf="profile?.srclasses">
+            <ion-label>
+              <p align="left">{{language?.candidate_classes}}</p>
+            </ion-label>
+            <ion-note slot="end" class="ionnote">{{profile?.srclasses}}</ion-note>
+          </ion-item>
+          <ion-item class="item" *ngIf="profile?.srsection">
+            <ion-label>
+              <p align="left">{{language?.candidate_section}}</p>
+            </ion-label>
+            <ion-note slot="end" class="ionnote">{{profile?.srsection}}</ion-note>
+          </ion-item>
+          <ion-item class="item">
+            <ion-label>
+              <p align="left">{{language?.candidate_group}}</p>
+            </ion-label>
+            <ion-note slot="end" class="ionnote">{{groups[profile?.srstudentgroupID]}}</ion-note>
+          </ion-item>
+          <ion-item class="item">
+            <ion-label>
+              <p align="left">{{language?.candidate_optionalsubject}}</p>
+            </ion-label>
+            <ion-note slot="end" class="ionnote">{{subjects[profile?.sroptionalsubjectID]}}</ion-note>
+          </ion-item>
+
+          <ion-item class="item">
+            <ion-label>
+              <p align="left">{{language?.candidate_date_of_verification}}</p>
+            </ion-label>
+            <ion-note slot="end" class="ionnote">{{candidate?.date_verification | date: "dd MMM yyyy"}}</ion-note>
+          </ion-item>
+          <ion-item class="item">
+            <ion-label>
+              <p align="left">{{language?.candidate_verified_by}}</p>
+            </ion-label>
+            <ion-note slot="end" class="ionnote">{{candidate?.verified_by}}</ion-note>
+          </ion-item>
+        </ion-list>
+      </div>
+    </ion-card>
+  </ng-container>
+</ion-content>

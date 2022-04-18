@@ -1,0 +1,103 @@
+<ion-header>
+  <ion-toolbar class="background-color">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title align="center">{{language?.panel_title}} {{language?.view}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content  class="bg-image no-scroll">
+  <ion-refresher slot="fixed" (ionRefresh)="doRefreshProfile($event,true)" *ngIf="isRefresh">
+    <ion-refresher-content
+            pullingIcon="arrow-dropdown"
+            pullingText="Pull to refresh"
+            refreshingSpinner="circles"
+            refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
+  <div class="imgcard" align="center" *ngIf="profile">
+    <img  color="secondary" *ngIf="profile" src="{{siteUrl}}uploads/images/{{profile?.photo}}" class="img2" align="center">
+  </div>
+  <ng-container  *ngIf="profile">
+    <ion-card class="card-bg2">
+      <ion-card-header class="card-header1">
+        <span class="ion-card-span">{{language?.personal_information}}</span>
+      </ion-card-header>
+      <ion-list  class="card-bg">
+        <ion-item class="item-p" *ngIf="profile?.name">
+          <ion-label>
+            <p align="left">{{language?.profile_name}}</p>
+          </ion-label>
+          <ion-note slot="end" class="ionnote">{{profile?.name}}</ion-note>
+        </ion-item>
+        <ion-item class="item-p" *ngIf="profile?.srregisterNO">
+          <ion-label>
+            <p align="left">{{language?.profile_registerNO}}</p>
+          </ion-label>
+          <ion-note slot="end" class="ionnote">{{profile?.srregisterNO}}</ion-note>
+        </ion-item>
+        <ion-item class="item-p" *ngIf="profile?.srroll">
+          <ion-label>
+            <p align="left">{{language?.profile_roll}}</p>
+          </ion-label>
+          <ion-note slot="end" class="ionnote">{{profile?.srroll}}</ion-note>
+        </ion-item>
+        <ion-item class="item-p" *ngIf="profile?.srclasses">
+          <ion-label>
+            <p align="left">{{language?.profile_classes}}</p>
+          </ion-label>
+          <ion-note slot="end" class="ionnote">{{profile?.srclasses}}</ion-note>
+        </ion-item>
+        <ion-item class="item-p" *ngIf="profile?.srsection">
+          <ion-label>
+            <p align="left">{{language?.profile_section}}</p>
+          </ion-label>
+          <ion-note slot="end" class="ionnote">{{profile?.srsection}}</ion-note>
+        </ion-item>
+
+        <ion-item class="item-p" *ngIf="profile?.sex">
+          <ion-label>
+            <p align="left">{{language?.profile_sex}}</p>
+          </ion-label>
+          <ion-note slot="end" class="ionnote">{{profile?.sex}}</ion-note>
+        </ion-item>
+        <ion-item class="item-p" *ngIf="profile?.dob">
+          <ion-label>
+            <p align="left">{{language?.profile_dob}}</p>
+          </ion-label>
+          <ion-note slot="end" class="ionnote">{{profile?.dob | date: "dd MMM yyyy"}}</ion-note>
+        </ion-item>
+        <ion-item class="item-p" *ngIf="profile?.jod">
+          <ion-label>
+            <p align="left">{{language?.profile_jod}}</p>
+          </ion-label>
+          <ion-note slot="end" class="ionnote">{{profile?.jod | date: "dd MMM yyyy"}}</ion-note>
+        </ion-item>
+        <ion-item class="item-p" *ngIf="profile?.bloodgroup">
+          <ion-label>
+            <p align="left">{{language?.profile_bloodgroup}}</p>
+          </ion-label>
+          <ion-note slot="end" class="ionnote">{{profile?.bloodgroup}}</ion-note>
+        </ion-item>
+        <ion-item class="item-p" *ngIf="profile?.religion">
+          <ion-label>
+            <p align="left">{{language?.profile_religion}}</p>
+          </ion-label>
+          <ion-note slot="end" class="ionnote">{{profile?.religion}}</ion-note>
+        </ion-item>
+        <ion-item class="item-p" *ngIf="profile?.phone">
+          <ion-label>
+            <p align="left">{{language?.profile_phone}}</p>
+          </ion-label>
+          <ion-note slot="end" class="ionnote">{{profile?.phone}}</ion-note>
+        </ion-item>
+        <ion-item class="item-p" *ngIf="profile?.email">
+          <ion-label>
+            <p align="left">{{language?.profile_email}}</p>
+          </ion-label>
+          <ion-note slot="end" class="ionnote">{{profile?.email}}</ion-note>
+        </ion-item>
+      </ion-list>
+    </ion-card>
+  </ng-container>
+</ion-content>

@@ -1,0 +1,80 @@
+<ion-header>
+  <ion-toolbar class="background-color">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title align="center">{{language?.panel_title}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="padding-css">
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event,true,inivoiceID)" *ngIf="isRefresh">
+    <ion-refresher-content
+            pullingIcon="arrow-dropdown"
+            pullingText="Pull to refresh"
+            refreshingSpinner="circles"
+            refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
+  <ion-card>
+    <ion-card-content class=" box-body box-profile">
+      <div class="imgcard p-text" align="center">
+        <img src="{{siteUrl}}uploads/images/{{studentprofile?.photo}}" class="img2" align="center">
+      </div>
+      <h3 class="profile-username text-center">{{studentprofile?.srname}}</h3>
+      <p class="text-muted text-center">{{usertype?.usertype}}</p>
+      <ul class="list-group list-group-unbordered">
+        <li class="list-group-item" style="background-color: #FFF">
+          <b>Register NO</b> <a class="pull-right">{{studentprofile?.srregisterNO}}</a>
+        </li>
+        <li class="list-group-item" style="background-color: #FFF">
+          <b>Roll</b> <a class="pull-right">{{studentprofile?.srroll}}</a>
+        </li>
+        <li class="list-group-item" style="background-color: #FFF">
+          <b>Class</b> <a class="pull-right">{{studentprofile?.srclasses}}</a>
+        </li>
+        <li class="list-group-item" style="background-color: #FFF">
+          <b>Section</b> <a class="pull-right">{{studentprofile?.srsection}}</a>
+        </li>
+      </ul>
+    </ion-card-content>
+  </ion-card>
+  <div class="div-overflow-css">
+    <table class="table table-bordered product-style">
+      <thead>
+      <tr>
+        <th class="col-lg-2">#</th>
+        <th class="col-lg-4">{{language?.invoice_feetype}}</th>
+        <th class="col-lg-2">{{language?.invoice_amount}}</th>
+        <th class="col-lg-2">{{language?.invoice_due}}</th>
+        <th class="col-lg-2">{{language?.invoice_paid_amount}}</th>
+      </tr>
+      </thead>
+      <tbody id="inputContainer">
+      <tr  *ngFor="let invoice of invoices let rowIndex = index">
+        <td data-title="#">{{rowIndex+1}}</td>
+        <td data-title="Fee Type">{{invoice.feetype}}</td>
+        <td data-title="Amount">{{invoice.amount}}</td>
+        <td data-title="Discount">{{invoiceDue[invoice.invoiceID]}}</td>
+        <td data-title="Subtotal"> <ion-input type="number" (ionInput)="getSum()" name="{{invoice.invoiceID}}" placeholder="00.0"></ion-input></td>
+      </tr>
+      </tbody>
+      <tfoot>
+      <tr>
+        <td colspan="2"><span class="pull-right"><b>{{language?.invoice_total}}</b></span></td>
+        <td><b>{{totalAmount}}</b></td>
+        <td><b>{{totalDue}}</b></td>
+        <td><b>{{paidAmount}}</b></td>
+      </tr>
+      </tfoot>
+    </table>
+  </div>
+  <ion-row>
+    <ion-col>
+      <ion-button expand="full" color="success" *ngIf="paidPayment?.length > 0" (click)="openDetailsWithQueryParams()" >Stripe</ion-button>
+    </ion-col>
+<!--    <ion-col>-->
+<!--      <ion-button expand="full" color="success" *ngIf="paidPayment?.length > 0" (click)="openDetailsWithRazorPay()" >RazorPay</ion-button>-->
+<!--    </ion-col>-->
+  </ion-row>
+</ion-content>

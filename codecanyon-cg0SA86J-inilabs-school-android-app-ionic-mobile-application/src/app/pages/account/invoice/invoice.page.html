@@ -1,0 +1,86 @@
+<ion-header>
+  <ion-toolbar class="background-color">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title align="center">{{language?.panel_title}}</ion-title>
+  </ion-toolbar>
+  <ng-container *ngIf="maininvoices?.length > 0">
+    <ion-toolbar color="light">
+      <ion-row>
+        <ion-col col-12 no-padding>
+          <ion-item>
+            <ion-searchbar placeholder="Search for a student name"  (ionInput)="filterArea($event.target.value)">
+            </ion-searchbar>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-toolbar>
+  </ng-container>
+</ion-header>
+<ion-content  class="bg-image no-scroll">
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event,true)" *ngIf="isRefresh">
+    <ion-refresher-content
+            pullingIcon="arrow-dropdown"
+            pullingText="Pull to refresh"
+            refreshingSpinner="circles"
+            refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
+  <ng-container  *ngIf="maininvoices?.length > 0">
+    <ion-card class="card-bg"  *ngFor="let maininvoice of maininvoices">
+      <div class="card-class">
+        <ion-row>
+          <ion-col size="3">
+            <img class="boy-img" src="{{siteUrl}}uploads/images/{{maininvoice.photo}}">
+          </ion-col>
+          <ion-col size="9">
+            <div class="text-div">
+              <h4 class="text-color-h"> {{maininvoice.srname}}</h4>
+              <p class="text-color-p">{{language?.invoice_classes}}({{maininvoice.srclasses}})</p>
+            </div>
+            <ion-row>
+            <ion-col size="4">
+                <ion-badge color="success" style="font-size: 11px !important;" *ngIf="maininvoice.maininvoicestatus == '2';else status">{{language?.invoice_fully_paid}}</ion-badge>
+              <ng-template #status >
+                <ion-badge style="font-size: 11px !important;" *ngIf="maininvoice.maininvoicestatus == '1';else status1" color="warning">{{language?.invoice_partially_paid}}</ion-badge>
+              </ng-template>
+              <ng-template #status1 >
+                <ion-badge style="font-size: 11px !important;"  *ngIf="maininvoice.maininvoicestatus == '0';" color="danger">{{language?.invoice_notpaid}}</ion-badge>
+              </ng-template>
+            </ion-col>
+            <ion-col size="8">
+              <div class="ion-text-end">
+                <ion-button  class="button-with-height button-color"  size="default"  (click)="getinvoiceIDView(maininvoice.maininvoiceID)">View</ion-button>
+<!--                <ion-button  *ngIf="maininvoice.maininvoicestatus != '2'" class="button-with-height" fill="solid" size="default" color="primary" (click)="getinvoiceIDPayment(maininvoice.maininvoiceID)">Payment</ion-button>-->
+              </div>
+            </ion-col>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+        <ion-item class="p-text ion-item-css">
+          <ion-avatar class="avatar-img">
+            <img src="assets/routine.png" />
+          </ion-avatar>
+          <ion-label>
+            <h4>{{language?.invoice_date}}</h4>
+            <ion-text>
+              <p>{{maininvoice.maininvoicedate | date: "dd MMM yyyy"}}</p>
+            </ion-text>
+          </ion-label>
+        </ion-item>
+        <ion-item class="p-text ion-item-css">
+          <ion-avatar class="avatar-img">
+            <img src="assets/invoice.png" />
+          </ion-avatar>
+          <ion-label>
+            <h4>{{language?.invoice_total}} - {{totalamount[maininvoice?.maininvoiceID]}} </h4>
+            <ion-text *ngIf="maininvoice.maininvoicestatus != '0';">
+              <p>{{language?.invoice_paid}} - {{totalpayment[maininvoice?.maininvoiceID]}}</p>
+            </ion-text>
+          </ion-label>
+        </ion-item>
+      </div>
+    </ion-card>
+  </ng-container>
+</ion-content>
